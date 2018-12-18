@@ -123,7 +123,7 @@ namespace GraphQlClient
 
         public override string ToQueryString()
         {
-            var argumentsQueryString = _arguments.Any() ? $"({string.Join(',', _arguments.Values.Select(x => x.ToQueryString()))})" : string.Empty;
+            var argumentsQueryString = _arguments.Any() ? $"({string.Join(",", _arguments.Values.Select(x => x.ToQueryString()))})" : string.Empty;
             var fieldsQueryString = string.Join(", ", _fields.Values.Select(x => x.ToQueryString()));
 
             return $"{Name}{argumentsQueryString} {{ {fieldsQueryString} }}";
