@@ -33,7 +33,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet pack --output nuget/
+- script: dotnet pack --output GraphQlClient/nuget/
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'dotnet pack'
 
@@ -41,5 +41,5 @@ steps:
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'publish artifact'
   inputs:
-    pathtoPublish: 'nuget/'
+    pathtoPublish: 'GraphQlClient/nuget/'
     artifactName: 'graphqlclient.nupkg'
