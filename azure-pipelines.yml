@@ -32,3 +32,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- script: dotnet pack GraphQlClient/ --output nuget/
+  displayName: 'dotnet pack'
+
+- task: PublishBuildArtifacts@1
+  condition: ne(variables['Build.Reason'], 'PullRequest')
+  displayName: 'publish artifact'
+  inputs:
+    pathtoPublish: 'GraphQlClient/nuget/'
+    artifactName: 'graphqlclient.nupkg'
