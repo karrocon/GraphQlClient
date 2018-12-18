@@ -8,9 +8,9 @@ Simple GraphQL client wrapper for .NET.
 
 Supports query string building in an expression-based style:
 
-``
+```
 var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => queryBuilder
-                .AddObjectAs<IEnumerable<Shop>, Shop>(query => query.Shops, shopBuilder => shopBuilder
+                     .AddObjectAs<IEnumerable<Shop>, Shop>(query => query.Shops, shopBuilder => shopBuilder
                      .AddScalar(shop => shop.Name)
                      .AddObjectAs<IEnumerable<User>, User>(shop => shop.Users, userBuilder => userBuilder
                           .IncludeAllScalars()
@@ -22,13 +22,13 @@ var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => query
                      .AddArgumentAsVariable("name", "nameVariable")
                 )
             );
-``
+```
 
 #### Relay
 
 It also supports building query strings for Relay-based servers:
 
-``
+```
 var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => queryBuilder
                 .AddConnection(query => query.Shops, 10, shopBuilder => shopBuilder
                     .AddScalar(shop => shop.Name)
@@ -40,13 +40,13 @@ var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => query
                     )
                 )
             );
-``
+```
 
 ### Query all pages at once using Relay
 
 The library features an extension method for graphql-dotnet.IGraphQlClient to query every Relay page at once:
 
-``
+```
 var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => queryBuilder
                 .AddConnection(query => query.Shops, 10, shopBuilder => shopBuilder
                     .AddScalar(shop => shop.Name)
@@ -60,4 +60,4 @@ var queryString = GraphQueryStringBuilder.Build<QueryRoot>(queryBuilder => query
             );
 
 var result = await client.QueryAllPagesAsync(new GraphQlRequest { Query = queryString });
-``
+```
