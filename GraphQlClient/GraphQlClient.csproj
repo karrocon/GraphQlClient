@@ -1,7 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Authors>Carlos Rodríguez Contreras</Authors>
+    <PackageDescription>Library to simplify making GraphQl requests</PackageDescription>
+    <PackageId>karrocon.GraphQlClient</PackageId>
+    <PackageVersion>0.1.0</PackageVersion>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Title>karrocon.GraphQlClient</Title>
   </PropertyGroup>
 
 </Project>
