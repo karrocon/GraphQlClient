@@ -9,4 +9,8 @@
     <Title>karrocon.GraphQlClient</Title>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
 </Project>

@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL.Client" Version="2.0.0-alpha.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GraphQlClient\GraphQlClient.csproj" />
   </ItemGroup>
 
