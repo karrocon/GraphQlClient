@@ -20,6 +20,7 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
+    includeNuGetOrg: true
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
