@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GraphQlClient.Samples\GraphQlClient.Samples.csproj" />
     <ProjectReference Include="..\GraphQlClient\GraphQlClient.csproj" />
   </ItemGroup>
 

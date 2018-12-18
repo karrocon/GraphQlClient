@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GraphQlClient.Relay.Samples\GraphQlClient.Relay.Samples.csproj" />
     <ProjectReference Include="..\GraphQlClient.Relay\GraphQlClient.Relay.csproj" />
   </ItemGroup>
 
