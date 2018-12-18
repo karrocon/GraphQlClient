@@ -33,7 +33,11 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet pack --output nuget/
+- script: dotnet pack GraphQlClient --output nuget/
+  condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: 'dotnet pack'
+
+  - script: dotnet pack GraphQlClient.Relay --output nuget/
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'dotnet pack'
 
