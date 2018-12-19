@@ -53,4 +53,4 @@ steps:
   displayName: 'publish artifact'
   inputs:
     pathtoPublish: 'GraphQlClient.Relay/nuget/'
-    artifactName: 'graphqlclient.nupkg'
+    artifactName: 'graphqlclientrelay.nupkg'
