@@ -7,9 +7,9 @@ namespace GraphQlClient.Test
         [Fact]
         public void ParseShouldCreateStructureIncludingArgumentsWithLiteralValues()
         {
-            var argumentName = "FakeArgumentName";
+            var argumentName = "fakeArgumentName";
             var argumentValue = "FakeArgumentValue";
-            var query = $"{{ Addresses({argumentName}:\"{argumentValue}\") {{ Name }} }}";
+            var query = $"{{ addresses({argumentName}:\"{argumentValue}\") {{ name }} }}";
 
             var result = GraphQueryStringParser.Parse(query);
 
@@ -19,9 +19,9 @@ namespace GraphQlClient.Test
         [Fact]
         public void ParseShouldCreateStructureIncludingArgumentsWithVariableValue()
         {
-            var argumentName = "FakeArgumentName";
+            var argumentName = "fakeArgumentName";
             var variableName = "FakeVariableName";
-            var query = $"{{ Addresses({argumentName}:${variableName}) {{ Name }} }}";
+            var query = $"{{ addresses({argumentName}:${variableName}) {{ name }} }}";
 
             var result = GraphQueryStringParser.Parse(query);
 
@@ -31,7 +31,7 @@ namespace GraphQlClient.Test
         [Fact]
         public void ParseShouldCreateStructureIncludingAllScalarFields()
         {
-            var query = $"{{ Addresses {{ Type, Name, Number, OtherInformation }} }}";
+            var query = $"{{ addresses {{ type, name, number, otherInformation }} }}";
 
             var result = GraphQueryStringParser.Parse(query);
 

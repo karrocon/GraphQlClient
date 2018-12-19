@@ -10,19 +10,17 @@ namespace GraphQlClient.Relay.Client
     internal class PaginableResponse<T> : IPaginableResponse<T>
     {
         private IGraphQueryableObject _query;
-        private T _result;
         private IGraphQueryableObject _lastConnection;
 
-        public PaginableResponse(IGraphQueryableObject query, T result)
+        public PaginableResponse(IGraphQueryableObject query)
         {
             _query = query;
-            _result = result;
             _lastConnection = null;
         }
 
-        public string GetNextPageQueryString()
+        public string GetNextPageQueryString(T result)
         {
-            var (level, path, connection) = FindDeepestConnection(_result, 0, string.Empty, (null, null, null));
+            var (level, path, connection) = FindDeepestConnection(result, 0, string.Empty, (null, null, null));
 
             if (connection == null)
             {
@@ -53,9 +51,13 @@ namespace GraphQlClient.Relay.Client
                 return candidate;
             }
 
-            if (container.GetType().IsArray)
+            if (container.GetType().GetInterface(nameof(IEnumerable)) != null)
             {
-                if (container.GetType().GetElementType().IsValueType)
+                var elementType = container.GetType().IsArray
+                    ? container.GetType().GetElementType()
+                    : container.GetType().GetGenericArguments().SingleOrDefault();
+
+                if (elementType == null || elementType.IsValueType)
                 {
                     return candidate;
                 }
@@ -116,9 +118,9 @@ namespace GraphQlClient.Relay.Client
             return candidate;
         }
 
-        public bool HasNextPage()
+        public bool HasNextPage(T result)
         {
-            return HasNextPage(_result);
+            return HasNextPage(result);
         }
 
         private bool HasNextPage(object container)
@@ -166,11 +168,6 @@ namespace GraphQlClient.Relay.Client
             }
 
             return false;
-        }
-
-        public Task<T> ReadAsStringAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

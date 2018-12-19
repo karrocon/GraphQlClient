@@ -4,8 +4,7 @@ namespace GraphQlClient.Relay.Client
 {
     public interface IPaginableResponse<T>
     {
-        string GetNextPageQueryString();
-        bool HasNextPage();
-        Task<T> ReadAsStringAsync();
+        string GetNextPageQueryString(T result);
+        bool HasNextPage(T result);
     }
 }
