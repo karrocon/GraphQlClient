@@ -169,10 +169,5 @@ namespace GraphQlClient.Relay.Client
 
             return false;
         }
-
-        public Task<T> ReadAsStringAsync()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

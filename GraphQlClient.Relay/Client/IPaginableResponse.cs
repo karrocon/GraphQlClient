@@ -6,6 +6,5 @@ namespace GraphQlClient.Relay.Client
     {
         string GetNextPageQueryString(T result);
         bool HasNextPage(T result);
-        Task<T> ReadAsStringAsync();
     }
 }
