@@ -1,4 +1,6 @@
-﻿namespace GraphQlClient
+﻿using GraphQlClient.Extensions;
+
+namespace GraphQlClient
 {
     internal class GraphQueryableScalar : GraphQueryableField
     {
@@ -6,7 +8,7 @@
 
         public override string ToQueryString()
         {
-            return Name;
+            return Name.ToLowerInvariantFirst();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace GraphQlClient
+﻿using GraphQlClient.Extensions;
+
+namespace GraphQlClient
 {
     internal class GraphQueryableArgument : GraphQueryableElement
     {
@@ -11,7 +13,7 @@
 
         public override string ToQueryString()
         {
-            return $"{Name}:{Value.ToQueryString()}";
+            return $"{Name.ToLowerInvariantFirst()}:{Value.ToQueryString()}";
         }
     }
 }

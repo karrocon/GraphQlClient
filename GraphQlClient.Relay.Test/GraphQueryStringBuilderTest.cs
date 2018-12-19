@@ -9,7 +9,7 @@ namespace GraphQlClient.Relay.Test
         [Fact]
         public void BuildShouldCreateQueryStringIncludingAConnection()
         {
-            var expectedQueryString = $"{{ Addresses(first:5) {{ Edges {{ Cursor, Node {{ Type, Name, Number, OtherInformation }} }}, PageInfo {{ HasNextPage, HasPreviousPage }} }} }}";
+            var expectedQueryString = $"{{ addresses(first:5) {{ edges {{ cursor, node {{ type, name, number, otherInformation }} }}, pageInfo {{ hasNextPage, hasPreviousPage }} }} }}";
             var queryString = GraphQueryStringBuilder.Build<QueryRoot>(rootBuilder => rootBuilder
                 .AddConnection(root => root.Addresses, 5, addressBuilder => addressBuilder
                     .IncludeAllScalars()

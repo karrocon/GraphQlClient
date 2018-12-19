@@ -11,7 +11,8 @@ namespace GraphQlClient.Test
         {
             var argumentName = "FakeArgumentName";
             var argumentValue = "FakeArgumentValue";
-            var expectedQueryString = $"{{ Addresses({argumentName}:\"{argumentValue}\") {{ Name }} }}";
+            var expectedArgumentName = $"{char.ToLowerInvariant(argumentName[0])}{argumentName.Substring(1, argumentName.Length - 1)}";
+            var expectedQueryString = $"{{ addresses({expectedArgumentName}:\"{argumentValue}\") {{ name }} }}";
             var queryString = GraphQueryStringBuilder.Build<QueryRoot>(rootBuilder => rootBuilder
                 .AddObjectAs<IEnumerable<Address>, Address>(root => root.Addresses, addressBuilder => addressBuilder
                     .AddArgument(argumentName, argumentValue)
@@ -26,8 +27,9 @@ namespace GraphQlClient.Test
         public void BuildShouldCreateQueryStringIncludingArgumentsWithVariableValue()
         {
             var argumentName = "FakeArgumentName";
+            var expectedArgumentName = $"{char.ToLowerInvariant(argumentName[0])}{argumentName.Substring(1, argumentName.Length - 1)}";
             var variableName = "FakeVariableName";
-            var expectedQueryString = $"{{ Addresses({argumentName}:${variableName}) {{ Name }} }}";
+            var expectedQueryString = $"{{ addresses({expectedArgumentName}:${variableName}) {{ name }} }}";
             var queryString = GraphQueryStringBuilder.Build<QueryRoot>(rootBuilder => rootBuilder
                 .AddObjectAs<IEnumerable<Address>, Address>(root => root.Addresses, addressBuilder => addressBuilder
                     .AddArgumentAsVariable(argumentName, variableName)
@@ -41,7 +43,7 @@ namespace GraphQlClient.Test
         [Fact]
         public void BuildShouldCreateQueryStringIncludingAllScalarFields()
         {
-            var expectedQueryString = $"{{ Addresses {{ Type, Name, Number, OtherInformation }} }}";
+            var expectedQueryString = $"{{ addresses {{ type, name, number, otherInformation }} }}";
             var queryString = GraphQueryStringBuilder.Build<QueryRoot>(rootBuilder => rootBuilder
                 .AddObjectAs<IEnumerable<Address>, Address>(root => root.Addresses, addressBuilder => addressBuilder
                     .IncludeAllScalars()

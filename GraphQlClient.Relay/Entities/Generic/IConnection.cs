@@ -4,6 +4,6 @@ namespace GraphQlClient.Relay.Entities
 {
     public interface IConnection<TNode> : IConnection where TNode : class
     {
-        new IEnumerable<IEdge<TNode>> Edges { get; set; }
+        new IEnumerable<Edge<TNode>> Edges { get; set; }
     }
 }

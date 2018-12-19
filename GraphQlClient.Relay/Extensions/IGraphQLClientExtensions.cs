@@ -1,7 +1,9 @@
 ﻿using GraphQL.Client;
 using GraphQL.Common.Request;
 using GraphQlClient.Relay.Client;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GraphQlClient.Relay.Extensions
@@ -12,12 +14,18 @@ namespace GraphQlClient.Relay.Extensions
         {
             var result = new List<T>();
             var response = await client.SendQueryAsync(request);
-            var data = response.GetDataFieldAs<T>("data");
+
+            if (response.Errors != null)
+            {
+                throw new Exception($"GraphQL exception: Query returned the following errors:\n {string.Join("\n", response.Errors.Select(e => e.Message))}");
+            }
+
+            var data = response.Data.ToObject<T>();
             result.Add(data);
 
-            var page = new PaginableResponse<T>(GraphQueryStringParser.Parse(request.Query), data);
+            var page = new PaginableResponse<T>(GraphQueryStringParser.Parse(request.Query));
             var queryString = string.Empty;
-            while (!string.IsNullOrEmpty(queryString = page.GetNextPageQueryString()))
+            while (!string.IsNullOrEmpty(queryString = page.GetNextPageQueryString(data)))
             {
                 response = await client.SendQueryAsync(new GraphQLRequest
                 {
@@ -25,7 +33,7 @@ namespace GraphQlClient.Relay.Extensions
                     Query = queryString,
                     Variables = request.Variables
                 });
-                data = response.GetDataFieldAs<T>("data");
+                data = response.Data.ToObject<T>();
                 result.Add(data);
             }
 
