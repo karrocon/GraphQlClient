@@ -2,6 +2,10 @@
 
 Simple GraphQL client wrapper for .NET.
 
+## Installation
+
+The packages are available at [nuget.org](https://www.nuget.org/) for installation (see [karrocon.GraphQlClient](https://www.nuget.org/packages/karrocon.GraphQlClient/) and [karrocon.GraphQlClient.Relay](https://www.nuget.org/packages/karrocon.GraphQlClient.Relay/)).
+
 ## Examples
 
 ### Build query strings easily
