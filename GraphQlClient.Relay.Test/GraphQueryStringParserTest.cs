@@ -7,7 +7,7 @@ namespace GraphQlClient.Relay.Test
         [Fact]
         public void ParseShouldCreateStructureIncludingAConnection()
         {
-            var query = $"{{ Addresses(first:5) {{ Edges {{ Cursor, Node {{ Type, Name, Number, OtherInformation }} }}, PageInfo {{ HasNextPage, HasPreviousPage }} }} }}";
+            var query = $"{{ addresses(first:5) {{ edges {{ cursor, node {{ type, name, number, otherInformation }} }}, pageInfo {{ hasNextPage, hasPreviousPage }} }} }}";
 
             var result = GraphQueryStringParser.Parse(query);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphQlClient.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -43,23 +44,30 @@ namespace GraphQlClient
             }
 
             var splittedPath = path.Split('.');
-            if (!_fields.ContainsKey(splittedPath[0]))
+            var nextPath = splittedPath[0];
+            if (!_fields.ContainsKey(nextPath) && _fields.ContainsKey(nextPath.ToLowerInvariantFirst()))
+            {
+                // TODO: This should not be updated here by default. The parser should receive the expected
+                // type to properly perform the Parse function from the model
+                nextPath = nextPath.ToLowerInvariantFirst();
+            }
+            else if (!_fields.ContainsKey(nextPath))
             {
                 throw new KeyNotFoundException("There are no items matching the given path");
             }
 
             if (splittedPath.Length == 1)
             {
-                return _fields[splittedPath[0]];
+                return _fields[nextPath];
             }
 
-            var field = _fields[splittedPath[0]];
+            var field = _fields[nextPath];
             if (field == null || field.GetType().GetInterface(nameof(IGraphQueryableObject)) == null)
             {
                 throw new KeyNotFoundException("There are no items matching the given path");
             }
 
-            return ((IGraphQueryableObject)field).SearchField(path.Remove(0, splittedPath[0].Length + 1));
+            return ((IGraphQueryableObject)field).SearchField(path.Remove(0, nextPath.Length + 1));
         }
 
         #endregion
@@ -126,7 +134,7 @@ namespace GraphQlClient
             var argumentsQueryString = _arguments.Any() ? $"({string.Join(",", _arguments.Values.Select(x => x.ToQueryString()))})" : string.Empty;
             var fieldsQueryString = string.Join(", ", _fields.Values.Select(x => x.ToQueryString()));
 
-            return $"{Name}{argumentsQueryString} {{ {fieldsQueryString} }}";
+            return $"{Name.ToLowerInvariantFirst()}{argumentsQueryString} {{ {fieldsQueryString} }}";
         }
 
         #endregion
