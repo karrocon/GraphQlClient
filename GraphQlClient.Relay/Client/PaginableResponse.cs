@@ -1,21 +1,20 @@
 ﻿using GraphQlClient.Relay.Entities;
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace GraphQlClient.Relay.Client
 {
     internal class PaginableResponse<T> : IPaginableResponse<T>
     {
         private IGraphQueryableObject _query;
-        private IGraphQueryableObject _lastConnection;
+        private Dictionary<int, IGraphQueryableObject> _currentConnections;
 
         public PaginableResponse(IGraphQueryableObject query)
         {
             _query = query;
-            _lastConnection = null;
+            _currentConnections = new Dictionary<int, IGraphQueryableObject>();
         }
 
         public string GetNextPageQueryString(T result)
@@ -27,19 +26,24 @@ namespace GraphQlClient.Relay.Client
                 return null;
             }
 
-            var queryableField = (IGraphQueryableObject)_query.SearchField(path);
-            if (_lastConnection != queryableField && _lastConnection != null)
+            var keysToRemove = new List<int>();
+            foreach (var connectionEntry in _currentConnections.Where(x => x.Key >= level))
             {
-                if (_lastConnection != null)
-                {
-                    ((GraphQueryableObject<IConnection>)_lastConnection).RemoveArgument("after");
-                }
+                ((GraphQueryableObject<object>)connectionEntry.Value).RemoveArgument("after");
+                keysToRemove.Add(connectionEntry.Key);
             }
+
+            foreach (var key in keysToRemove)
+            {
+                _currentConnections.Remove(key);
+            }
+
+            var queryableField = (IGraphQueryableObject)_query.SearchField(path);
             queryableField.AddArgument("after", connection.Edges.Last().Cursor);
 
             var stringQuery = ((IGraphQueryable)_query).ToQueryString();
 
-            _lastConnection = queryableField;
+            _currentConnections.Add(level.Value, queryableField);
 
             return stringQuery;
         }
