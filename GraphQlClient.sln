@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient", "GraphQlClient\GraphQlClient.csproj", "{7ED40B8A-EE85-49F9-A8C1-49CE5F5EB43D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient", "GraphQlClient\GraphQlClient.csproj", "{7ED40B8A-EE85-49F9-A8C1-49CE5F5EB43D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient.Relay", "GraphQlClient.Relay\GraphQlClient.Relay.csproj", "{96483F5C-3A42-405B-B1BA-C53FEB5BDA6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient.Relay", "GraphQlClient.Relay\GraphQlClient.Relay.csproj", "{96483F5C-3A42-405B-B1BA-C53FEB5BDA6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient.Test", "GraphQlClient.Test\GraphQlClient.Test.csproj", "{8FADB385-16D2-4A28-AF5C-E4C2755765EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient.Test", "GraphQlClient.Test\GraphQlClient.Test.csproj", "{8FADB385-16D2-4A28-AF5C-E4C2755765EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient.Relay.Test", "GraphQlClient.Relay.Test\GraphQlClient.Relay.Test.csproj", "{69939ED5-CCBA-4EDF-BBE3-A7D77CED8FB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient.Relay.Test", "GraphQlClient.Relay.Test\GraphQlClient.Relay.Test.csproj", "{69939ED5-CCBA-4EDF-BBE3-A7D77CED8FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient.Samples", "GraphQlClient.Samples\GraphQlClient.Samples.csproj", "{B53AB9F2-37BE-484F-9814-E17617288283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient.Samples", "GraphQlClient.Samples\GraphQlClient.Samples.csproj", "{B53AB9F2-37BE-484F-9814-E17617288283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQlClient.Relay.Samples", "GraphQlClient.Relay.Samples\GraphQlClient.Relay.Samples.csproj", "{1F08020A-1608-482C-B5B5-BB2B37BC8CBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlClient.Relay.Samples", "GraphQlClient.Relay.Samples\GraphQlClient.Relay.Samples.csproj", "{1F08020A-1608-482C-B5B5-BB2B37BC8CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

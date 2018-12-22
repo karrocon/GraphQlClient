@@ -33,6 +33,12 @@ namespace GraphQlClient.Relay.Extensions
                     Query = queryString,
                     Variables = request.Variables
                 });
+
+                if (response.Errors != null)
+                {
+                    throw new Exception($"GraphQL exception: Query returned the following errors:\n {string.Join("\n", response.Errors.Select(e => e.Message))}");
+                }
+
                 data = response.Data.ToObject<T>();
                 result.Add(data);
             }
