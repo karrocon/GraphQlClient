@@ -17,9 +17,5 @@ namespace GraphQlClient.Client
         public GraphQlException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        protected GraphQlException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

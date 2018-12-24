@@ -60,17 +60,7 @@ namespace GraphQlClient.Client
 
         #endregion
 
-        #region Methods
-
-        public HttpRequestMessage ToHttpRequestMessage()
-        {
-            return new HttpRequestMessage(Method, RequestUri)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(this))
-            };
-        }
-
-        #region Private helper
+        #region Private helpers
 
         private void SetContentFromProperties()
         {
@@ -81,8 +71,6 @@ namespace GraphQlClient.Client
                 variables = _variables
             }), Encoding.UTF8, "application/json");
         }
-
-        #endregion
 
         #endregion
     }

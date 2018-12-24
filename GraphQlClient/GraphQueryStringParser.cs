@@ -24,6 +24,47 @@ namespace GraphQlClient
             return parsedObject;
         }
 
+        private static (IGraphQueryableObject operation, int index) ParseRoot(string queryString)
+        {
+            var index = 0;
+
+            while (index < queryString.Length)
+            {
+                var character = queryString[index];
+
+                if (character == '{')
+                {
+                    return ParseObject(queryString, index);
+                }
+                else if (char.IsLetter(character))
+                {
+                    var (word, newIndex) = ParseWord(queryString, index);
+                    switch (word)
+                    {
+                        case "query":
+                            return ParseObject(queryString, newIndex);
+                        case "mutation":
+                            return ParseMutation(queryString, newIndex);
+                        default:
+                            throw new Exception($"Unsupported operation: {word}");
+                    }
+                }
+                else if (!char.IsSeparator(character))
+                {
+                    throw new Exception($"Unexpected character at {index}");
+                }
+
+                index++;
+            }
+
+            throw new Exception($"End-of-string: Cannot parse operation");
+        }
+
+        private static (GraphQueryableObject<object> @object, int index) ParseMutation(string operationString, int startingIndex)
+        {
+            throw new NotImplementedException();
+        }
+
         private static (GraphQueryableField field, int index) ParseField(string queryString, int startingIndex)
         {
             var (fieldName, index) = ParseWord(queryString, startingIndex);
