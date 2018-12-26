@@ -1,6 +1,4 @@
-﻿using GraphQlClient.Relay.Entities;
-
-namespace GraphQlClient.Relay.Samples
+﻿namespace GraphQlClient.Relay.Samples
 {
     public class Shop
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GraphQlClient.Client
+namespace GraphQlClient
 {
     public class GraphQlResponseError
     {

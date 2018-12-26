@@ -1,4 +1,4 @@
-﻿namespace GraphQlClient.Relay.Entities
+﻿namespace GraphQlClient.Relay
 {
     public class Edge<TNode> : IEdge<TNode> where TNode : class
     {

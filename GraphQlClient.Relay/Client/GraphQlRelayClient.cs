@@ -1,16 +1,15 @@
-﻿using GraphQlClient.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("GraphQlClient.Relay.Test")]
-namespace GraphQlClient.Relay.Client
+namespace GraphQlClient.Relay
 {
-    public class GraphQlRelayClient : GraphQlClient.Client.GraphQlClient
+    public class GraphQlRelayClient : GraphQlClient
     {
-        protected event EventHandler<GraphQlEventArgs> OnBeforeQueryPage;
+        protected event EventHandler<IGraphQlEventArgs> OnBeforeQueryPage;
 
         public async Task<IEnumerable<T>> QueryAllPagesAsync<T>(GraphQlRequestMessage request, uint retries = 0)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GraphQlClient.Relay.Entities
+namespace GraphQlClient.Relay
 {
     public class Connection<TNode> : IConnection<TNode> where TNode : class
     {
