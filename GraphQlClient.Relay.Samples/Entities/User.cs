@@ -1,5 +1,4 @@
-﻿using GraphQlClient.Relay.Entities;
-using System;
+﻿using System;
 
 namespace GraphQlClient.Relay.Samples
 {

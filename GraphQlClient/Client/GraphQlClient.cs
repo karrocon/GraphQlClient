@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("GraphQlClient.Test")]
 [assembly: InternalsVisibleTo("GraphQlClient.Relay.Test")]
-namespace GraphQlClient.Client
+namespace GraphQlClient
 {
     public class GraphQlClient : IDisposable
     {
@@ -19,7 +19,7 @@ namespace GraphQlClient.Client
 
         #region Events
 
-        protected event EventHandler<GraphQlEventArgs> OnGraphQlError;
+        protected event EventHandler<IGraphQlEventArgs> OnGraphQlError;
 
         #endregion
 
@@ -45,6 +45,13 @@ namespace GraphQlClient.Client
         #endregion
 
         #region Public methods
+
+        public Task<TResult> MutateAsync<TResult>(IMutation<TResult> mutation, uint retries = 0)
+        {
+            var request = mutation.ToGraphQlRequestMessage();
+
+            return SendAsync<TResult>(request, retries);
+        }
 
         public async Task<T> SendAsync<T>(GraphQlRequestMessage request, uint retries = 0)
         {

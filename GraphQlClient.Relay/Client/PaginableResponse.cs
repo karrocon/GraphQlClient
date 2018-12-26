@@ -1,10 +1,9 @@
-﻿using GraphQlClient.Relay.Entities;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace GraphQlClient.Relay.Client
+namespace GraphQlClient.Relay
 {
     internal class PaginableResponse<T> : IPaginableResponse<T>
     {

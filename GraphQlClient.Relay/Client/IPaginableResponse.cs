@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace GraphQlClient.Relay.Client
+namespace GraphQlClient.Relay
 {
     public interface IPaginableResponse<T>
     {

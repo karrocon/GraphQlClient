@@ -1,4 +1,4 @@
-﻿namespace GraphQlClient.Relay.Entities
+﻿namespace GraphQlClient.Relay
 {
     public interface IEdge<TNode> : IEdge
     {
