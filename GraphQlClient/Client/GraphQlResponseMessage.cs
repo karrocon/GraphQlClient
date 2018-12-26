@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace GraphQlClient.Client
+namespace GraphQlClient
 {
-    public class GraphQlResponseMessage
-    {
-        public dynamic Data { get; set; }
-    }
+    public class GraphQlResponseMessage : GraphQlResponseMessage<dynamic> { }
 
-    public class GraphQlResponseMessage<T> : GraphQlResponseMessage
+    public class GraphQlResponseMessage<TData> : GraphQlResponseMessage<TData, dynamic> { }
+
+    public class GraphQlResponseMessage<TData, TExtensions>
     {
-        public new T Data { get; set; }
+        public TData Data { get; set; }
         public IEnumerable<GraphQlResponseError> Errors { get; set; }
+        public TExtensions Extensions { get; set; }
 
         [JsonIgnore] public dynamic RawData { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace GraphQlClient.Client
+﻿namespace GraphQlClient
 {
     public class GraphQlResponseErrorLocation
     {

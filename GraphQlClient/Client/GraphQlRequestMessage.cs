@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-namespace GraphQlClient.Client
+namespace GraphQlClient
 {
     public class GraphQlRequestMessage : HttpRequestMessage
     {

@@ -1,7 +1,4 @@
-﻿using GraphQlClient.Client;
-using GraphQlClient.Relay.Client;
-using GraphQlClient.Relay.Entities;
-using GraphQlClient.Relay.Samples;
+﻿using GraphQlClient.Relay.Samples;
 using Newtonsoft.Json;
 using NSubstitute;
 using System;
