@@ -58,6 +58,25 @@ namespace GraphQlClient
 
         public GraphQlRequestMessage(HttpMethod method, Uri requestUri) : base(method, requestUri) { }
 
+        public GraphQlRequestMessage(GraphQlRequestMessage request) : base(request.Method, request.RequestUri)
+        {
+            OperationName = request.OperationName;
+            Query = request.Query;
+            Variables = request.Variables;
+
+            foreach (var header in request.Headers)
+            {
+                Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            foreach (var property in request.Properties)
+            {
+                Properties.Add(property);
+            }
+
+            Version = request.Version;
+        }
+
         #endregion
 
         #region Private helpers
