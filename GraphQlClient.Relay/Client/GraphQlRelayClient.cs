@@ -11,15 +11,15 @@ namespace GraphQlClient.Relay
     {
         protected event EventHandler<IGraphQlEventArgs> OnBeforeQueryPage;
 
-        public async Task<IEnumerable<T>> QueryAllPagesAsync<T>(GraphQlRequestMessage request, uint retries = 0)
+        public async Task<IEnumerable<T>> QueryAllPagesAsync<T>(GraphQlRequestMessage request)
         {
-            return (await QueryAllPagesAsync<GraphQlResponseMessage<T>, T>(request, retries)).Select(x => x.Data);
+            return (await QueryAllPagesAsync<GraphQlResponseMessage<T>, T>(request)).Select(x => x.Data);
         }
 
-        public async Task<IEnumerable<TResponse>> QueryAllPagesAsync<TResponse, TResponseData>(GraphQlRequestMessage request, uint retries = 0) where TResponse : GraphQlResponseMessage<TResponseData>
+        public async Task<IEnumerable<TResponse>> QueryAllPagesAsync<TResponse, TResponseData>(GraphQlRequestMessage request) where TResponse : GraphQlResponseMessage<TResponseData>
         {
             var result = new List<TResponse>();
-            var response = await SendAsync<TResponse, TResponseData>(request, retries);
+            var response = await SendAsync<TResponse, TResponseData>(request);
 
             result.Add(response);
 
@@ -38,7 +38,7 @@ namespace GraphQlClient.Relay
                     OperationName = request.OperationName,
                     Query = queryString,
                     Variables = request.Variables
-                }, retries);
+                });
 
                 result.Add(response);
             }
