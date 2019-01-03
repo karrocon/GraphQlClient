@@ -13,6 +13,6 @@ namespace GraphQlClient
         public IEnumerable<GraphQlResponseError> Errors { get; set; }
         public TExtensions Extensions { get; set; }
 
-        [JsonIgnore] public dynamic RawData { get; set; }
+        public virtual bool IsValid() { return Errors == null; }
     }
 }

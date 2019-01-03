@@ -46,53 +46,56 @@ namespace GraphQlClient
 
         #region Public methods
 
-        public Task<TResult> MutateAsync<TResult>(IMutation<TResult> mutation, uint retries = 0)
+        public Task<TResult> MutateAsync<TResult>(IMutation<TResult> mutation)
         {
             var request = mutation.ToGraphQlRequestMessage();
 
-            return SendAsync<TResult>(request, retries);
+            return SendAsync<TResult>(request);
         }
 
-        public async Task<T> SendAsync<T>(GraphQlRequestMessage request, uint retries = 0)
+        public async Task<T> SendAsync<T>(GraphQlRequestMessage request)
         {
-            return (await SendAsync<GraphQlResponseMessage<T>, T>(request, retries)).Data;
+            return (await SendAsync<GraphQlResponseMessage<T>, T>(request)).Data;
         }
 
-        public async Task<TResponse> SendAsync<TResponse, TResponseData>(GraphQlRequestMessage request, uint retries = 0) where TResponse : GraphQlResponseMessage<TResponseData>
+        public async Task<TResponse> SendAsync<TResponse, TResponseData>(GraphQlRequestMessage request) where TResponse : GraphQlResponseMessage<TResponseData>
         {
-            var currentAttempt = 1;
+            var currentAttempt = 0;
+            HttpResponseMessage response = null;
             Exception lastException = null;
             do
             {
-                var response = await _httpClient.SendAsync(request);
-                if (!response.IsSuccessStatusCode)
+                response = await _httpClient.SendAsync(new GraphQlRequestMessage(request));
+                var rawResponseContent = await response.Content.ReadAsStringAsync();
+
+                TResponse parsedResponse = null;
+                if (response.IsSuccessStatusCode && (parsedResponse = JsonConvert.DeserializeObject<TResponse>(rawResponseContent)).IsValid())
                 {
-                    currentAttempt++;
-                    lastException = new HttpRequestException($"Request did not return successful status code (StatusCode: {response.StatusCode}, Content: {await response.Content.ReadAsStringAsync()})");
+                    return parsedResponse;
                 }
                 else
                 {
-                    var rawResponseString = await response.Content.ReadAsStringAsync();
-
-                    var graphQlResponse = JsonConvert.DeserializeObject<TResponse>(rawResponseString);
-                    graphQlResponse.RawData = JsonConvert.DeserializeObject<dynamic>(rawResponseString);
-
-                    if (graphQlResponse.Errors == null)
-                    {
-                        return graphQlResponse;
-                    }
-
                     OnGraphQlError?.Invoke(this, new GraphQlEventArgs<TResponse, TResponseData>
                     {
                         Request = request,
-                        Response = graphQlResponse
+                        Response = parsedResponse
                     });
 
-                    lastException = new GraphQlException($"Response returned the following errors: {JsonConvert.SerializeObject(graphQlResponse.Errors)}");
+                    currentAttempt++;
+                    lastException = new HttpRequestException($"Request did not return successful status code (StatusCode: {response.StatusCode}, Content: {rawResponseContent})");
                 }
-            } while (currentAttempt < retries + 1);
+            } while (ShouldRetry(request, response));
 
-            throw new Exception($"Query failed after {retries + 1} attemp(s) (see inner exception for details)", lastException);
+            throw new Exception($"Query failed after {currentAttempt} attempt(s) (see inner exception for details)", lastException);
+        }
+
+        #endregion
+
+        #region Protected methods
+
+        protected virtual bool ShouldRetry(GraphQlRequestMessage request, HttpResponseMessage response)
+        {
+            return false;
         }
 
         #endregion
