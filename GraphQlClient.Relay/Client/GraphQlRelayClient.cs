@@ -33,12 +33,20 @@ namespace GraphQlClient.Relay
                     Response = response
                 });
 
-                response = await SendAsync<TResponse, TResponseData>(new GraphQlRequestMessage
+                var pageRequest = new GraphQlRequestMessage
                 {
                     OperationName = request.OperationName,
                     Query = queryString,
-                    Variables = request.Variables
-                });
+                    Variables = request.Variables,
+                    RequestUri = request.RequestUri
+                };
+
+                foreach (var header in request.Headers)
+                {
+                    pageRequest.Headers.Add(header.Key, header.Value);
+                }
+
+                response = await SendAsync<TResponse, TResponseData>(pageRequest);
 
                 result.Add(response);
             }
