@@ -29,15 +29,16 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  condition: eq(variables['Build.Reason'], 'PullRequest')
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet pack GraphQlClient --output ./nuget/
+- script: dotnet pack GraphQlClient --output dist/graphqlclient
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'dotnet pack'
 
-- script: dotnet pack GraphQlClient.Relay --output ./nuget/
+- script: dotnet pack GraphQlClient.Relay --output dist/graphqlclientrelay
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'dotnet pack'
 
@@ -45,12 +46,12 @@ steps:
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'publish artifact'
   inputs:
-    pathtoPublish: 'GraphQlClient/nuget/'
+    pathtoPublish: 'dist/graphqlclient/'
     artifactName: 'graphqlclient.nupkg'
 
 - task: PublishBuildArtifacts@1
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'publish artifact'
   inputs:
-    pathtoPublish: 'GraphQlClient.Relay/nuget/'
+    pathtoPublish: 'dist/graphqlclientrelay/'
     artifactName: 'graphqlclientrelay.nupkg'
