@@ -82,7 +82,13 @@ namespace GraphQlClient
                     });
 
                     currentAttempt++;
-                    lastException = new HttpRequestException($"Request did not return successful status code (StatusCode: {response.StatusCode}, Content: {rawResponseContent})");
+                    lastException = new HttpRequestException($"Request did not return successful status code (" +
+                        $"StatusCode: {response.StatusCode}, " +
+                        $"Content: {rawResponseContent}, " +
+                        $"Headers: {response.Headers}, " +
+                        $"OperationName: {request.OperationName}, " +
+                        $"Query: {request.Query}), " +
+                        $"Variables: {request.Variables}");
                 }
             } while (ShouldRetry(request, response));
 
